@@ -23,6 +23,8 @@ I value:
 - being corrected when my technical reasoning is wrong
 - explanations that identify the actual mechanism, not vague verdicts
 
+The always-on profile should calibrate the agent to my demonstrated skills rather than treating me as either a beginner or an expert in every area. In particular, distinguish strong networking and operational Ansible skill from still-developing Python software-design/OOP and Ansible framework-internals knowledge.
+
 ## Personal versus repository standards
 
 These are **personal instructions**. They must not be placed in a shared repository's `.github` directory or otherwise impose my preferences on coworkers.
@@ -36,17 +38,18 @@ At the time this prompt was written, the intended installed architecture was:
 ~/.copilot/instructions/python.instructions.md
 ~/.copilot/instructions/ansible.instructions.md
 ~/.copilot/skills/network-change/SKILL.md
+~/.copilot/skills/ai-status-check/SKILL.md
 ```
 
 Verify whether these are still the current supported locations and mechanisms before preserving them.
 
 ## Architectural intent
 
-The design intentionally separates four concerns.
+The design intentionally separates five concerns.
 
 ### 1. Always-on core
 
-The core contains invariants that should not depend on semantic matching or file context, including:
+The core contains invariants and user calibration that should not depend on semantic matching or file context, including:
 
 - safety and correctness
 - assumptions versus confirmed facts
@@ -57,6 +60,7 @@ The core contains invariants that should not depend on semantic matching or file
 - uncertainty and source authority
 - secrets
 - code-review classification
+- concise user technical profile / skill calibration
 
 The core should remain concise. Do not turn it back into a monolithic language/tool handbook.
 
@@ -167,6 +171,40 @@ The skill should cover a procedure equivalent to:
 
 Avoid duplicating this entire framework elsewhere. The core states invariants; the skill supplies the detailed procedure.
 
+### 5. AI status-check skill
+
+The instruction system also includes a read-only manual diagnostic skill named `ai-status-check`.
+
+At the time this prompt was written, it also uses:
+
+```yaml
+disable-model-invocation: true
+```
+
+and is invoked explicitly as:
+
+```text
+/ai-status-check
+```
+
+Its purpose is to let me ask the agent to summarize, in one place:
+
+1. how it believes it should behave,
+2. its current understanding of my technical skill level,
+3. how it will handle Python coding/review,
+4. how it will handle Ansible coding/review,
+5. what manual skills are known and what verification limitations remain.
+
+This status skill is diagnostic only. It must not mutate files or configuration.
+
+Critically, it must not pretend that a file was loaded merely because the design expects that file to exist. It should distinguish:
+
+- instructions actually available in the current context,
+- expected/configured behavior,
+- file discovery independently verified through VS Code diagnostics/tooling.
+
+The status skill should be small enough to remain useful as a sanity check and should not duplicate the full contents of the core, Python, or Ansible instructions.
+
 ## Assumption behavior
 
 Do not make the agent interrogate me during ordinary design, troubleshooting, learning, examples, or code generation.
@@ -215,6 +253,7 @@ Do not recreate these earlier mistakes:
 - using successful task execution as proof of resulting state
 - OOP guidance that only suppresses classes rather than teaching when they fit
 - OOP guidance that fires on every helper and creates "no class needed" noise
+- a status command that reports expected configuration as though file loading had been independently verified
 
 ## Evaluation process
 
@@ -237,13 +276,14 @@ After changes, define or run tests that answer:
 2. Does Python work load the core plus Python instructions?
 3. Does Ansible work load the core plus Ansible instructions?
 4. Does `/network-change` load the skill in addition to applicable instructions?
-5. Does a fresh Cisco IOS task use an FQCN such as `cisco.ios.ios_config` instead of `ios_config`?
-6. Does the broad Ansible YAML/Jinja matching avoid influencing unrelated YAML such as GitHub Actions?
-7. When reviewing a realistic procedural Python script with shared state, does the agent proactively identify and explain a plausible class boundary?
-8. When procedural design is better, does it explain that boundary without gratuitous OOP refactoring?
+5. Does `/ai-status-check` summarize the user profile and applicable engineering/Python/Ansible behavior without claiming unverified instruction sources were loaded?
+6. Does a fresh Cisco IOS task use an FQCN such as `cisco.ios.ios_config` instead of `ios_config`?
+7. Does the broad Ansible YAML/Jinja matching avoid influencing unrelated YAML such as GitHub Actions?
+8. When reviewing a realistic procedural Python script with shared state, does the agent proactively identify and explain a plausible class boundary?
+9. When procedural design is better, does it explain that boundary without gratuitous OOP refactoring?
 
 ## Desired outcome
 
 Do not optimize for the largest or most comprehensive rule set. Optimize for **reliable agent behavior with the minimum always-on instruction load necessary**.
 
-The system should reinforce professional network-automation engineering while remaining useful for interactive learning and exploration.
+The system should reinforce professional network-automation engineering while remaining useful for interactive learning and exploration. It should also provide a manual, trustworthy way to inspect how the agent currently understands those instructions without confusing expected configuration with verified loading.
