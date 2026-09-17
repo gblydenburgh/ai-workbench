@@ -1,6 +1,6 @@
 # Network Automation Agent Instructions
 
-Personal AI engineering instructions for network automation work. The design deliberately separates always-on invariants from language/tool-specific rules and from a detailed high-impact change procedure.
+Personal AI engineering instructions for network automation work. The design deliberately separates always-on invariants from language/tool-specific rules and from manually invoked workflows and diagnostics.
 
 These files are personal configuration. They are not intended to be committed into shared work repositories.
 
@@ -13,6 +13,7 @@ Copy the files to:
 ~/.copilot/instructions/python.instructions.md
 ~/.copilot/instructions/ansible.instructions.md
 ~/.copilot/skills/network-change/SKILL.md
+~/.copilot/skills/ai-status-check/SKILL.md
 ```
 
 The copies stored in this repository are organized as:
@@ -28,6 +29,8 @@ network-automation-agent-instructions/
     │   ├── python.instructions.md
     │   └── ansible.instructions.md
     └── skills/
+        ├── ai-status-check/
+        │   └── SKILL.md
         └── network-change/
             └── SKILL.md
 ```
@@ -36,9 +39,10 @@ network-automation-agent-instructions/
 
 ### `CLAUDE.md` — always-on engineering floor
 
-Contains only invariants and cross-domain engineering judgment:
+Contains cross-domain engineering judgment and the user technical profile:
 
 - safety and correctness hierarchy
+- skill-level calibration
 - assumption handling
 - desired vs observed state
 - execution vs state validation
@@ -92,7 +96,31 @@ Therefore Copilot does not auto-load it based on semantic matching. Invoke it ex
 
 `user-invocable` is left at its default, so the skill remains available in the `/` menu.
 
-The always-on core supplies the safety floor even when the skill is not invoked; the skill supplies the detailed 13-step procedure.
+The always-on core supplies the safety floor even when the skill is not invoked; the skill supplies the detailed high-impact change procedure.
+
+### `/ai-status-check` — manual instruction sanity check
+
+This is a read-only diagnostic skill. Invoke it explicitly with:
+
+```text
+/ai-status-check
+```
+
+It summarizes:
+
+1. how the AI believes it should behave,
+2. its current understanding of the user's technical skill level,
+3. how it will handle Python coding and review,
+4. how it will handle Ansible coding and review,
+5. known manual skills and current verification limitations.
+
+It also has:
+
+```yaml
+disable-model-invocation: true
+```
+
+so it does not consume context during normal work and cannot be auto-selected by the model. The status skill must distinguish instructions actually available in the current context from configuration that has not been independently verified through VS Code diagnostics.
 
 ## Configuration verification
 
@@ -104,6 +132,7 @@ Test these cases:
 2. Python work should include the core plus `python.instructions.md`.
 3. Ansible work should include the core plus `ansible.instructions.md`.
 4. `/network-change` should include the core, any applicable scoped instructions, and the network-change skill.
+5. `/ai-status-check` should summarize the core/user profile and applicable Python/Ansible behavior without claiming unverified files were loaded.
 
 Also test the behavior that originally motivated the stronger Ansible rule. In a fresh chat, request a Cisco IOS task and verify that generated YAML uses an FQCN such as:
 
