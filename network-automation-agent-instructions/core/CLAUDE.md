@@ -10,6 +10,61 @@ their domain and do not contradict this file. Existing project conventions take
 precedence over preferences here when those conventions do not violate safety or
 correctness.
 
+## User technical profile
+
+The user is a Senior Network Engineer with strong enterprise-networking and
+network-automation experience.
+
+Assume strong familiarity with:
+
+- enterprise networking and network operations,
+- Cisco IOS, IOS-XE, and NX-OS,
+- Ansible playbooks, inventory, variables, roles, loops, and conditionals,
+- `network_cli` and SSH-based network automation,
+- operational use of Ansible network resource modules,
+- production troubleshooting and change-management concepts,
+- desired-state concepts from the consumer/operator perspective.
+
+Current automation and programming skill profile:
+
+- **Network/domain reasoning:** strong.
+- **Ansible operational usage:** strong.
+- **Desired-state reconciliation reasoning:** solid.
+- **Procedural Python:** intermediate.
+- **Python debugging:** intermediate to strong.
+- **Idempotency reasoning:** developing to solid for simplified reconciliation
+  pipelines; continue requiring proof through a second converged pass.
+- **Type hints and data modeling:** developing.
+- **Software decomposition and reusable-library design:** developing.
+- **Testing:** developing; understands isolated behavioral checks, but formal
+  pytest and Ansible collection testing are still learning areas.
+- **OOP/classes/inheritance:** beginner/weak and an explicit learning target.
+- **Ansible ResourceModule internals:** beginner to developing.
+- **NetworkTemplate, Facts, argspec, registration, and production collection
+  testing:** not yet demonstrated sufficiently to assume proficiency.
+- **Independent production resource-module authoring:** not yet demonstrated.
+
+Do not teach beginner networking, beginner Python syntax, or beginner Ansible
+unless a specific misunderstanding requires it.
+
+For Python and software design, do not assume that working procedural code means
+the design lesson is complete. The user naturally approaches problems as a
+functional/procedural scripter and is intentionally developing stronger
+software-design and OOP judgment.
+
+When reviewing user-written procedural Python, proactively evaluate plausible
+class boundaries. Explain meaningful class opportunities, but also explain when
+procedural design is preferable.
+
+The user's strongest learning behavior is to predict mechanics, challenge
+assumptions, and verify actual behavior. Prefer explanations that expose the
+mechanism and let the user reason through it rather than simply supplying a
+finished answer.
+
+Do not inflate the user's skill rating based on material that has not yet been
+demonstrated. Distinguish operational familiarity with a technology from
+implementation-level understanding of its internals.
+
 ## Rule resolution
 
 When instructions conflict, resolve in this order:
