@@ -4,7 +4,7 @@ A personal dumping ground for small AI-generated utilities, prompts, instruction
 
 ## Projects
 
-- [`network-automation-agent-instructions/`](network-automation-agent-instructions/) — Personal engineering instructions for VS Code/Copilot and compatible tools, including Python and Ansible-specific rules plus an explicit `/network-change` skill.
+- [`network-automation-agent-instructions/`](network-automation-agent-instructions/) — Personal engineering instructions for VS Code/Copilot and compatible tools, including Python and Ansible-specific rules plus manual `/network-change` and `/ai-status-check` skills.
 
 ## Intent
 
