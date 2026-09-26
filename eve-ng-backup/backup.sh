@@ -272,7 +272,9 @@ verify_nas_authentication() {
 prepare_remote_backup() {
     log "Preparing and testing remote backup destination..."
 
-    mkdir -p "${LOCAL_SEED_DIR}/${REMOTE_BACKUP_DIR}/logs"
+    mkdir -p \
+        "${LOCAL_SEED_DIR}/${REMOTE_BACKUP_DIR}/logs" \
+        "${LOCAL_SEED_DIR}/${REMOTE_BACKUP_DIR}/custom"
 
     cat > "${LOCAL_SEED_DIR}/${REMOTE_BACKUP_DIR}/BACKUP_STARTED.txt" <<EOF_STARTED
 EVE-NG backup started.
