@@ -5,6 +5,7 @@ A personal dumping ground for small AI-generated utilities, prompts, instruction
 ## Projects
 
 - [`network-automation-agent-instructions/`](network-automation-agent-instructions/) — Personal engineering instructions for VS Code/Copilot and compatible tools, including Python and Ansible-specific rules plus manual `/network-change` and `/ai-status-check` skills.
+- [`eve-ng-backup/`](eve-ng-backup/) — EVE-NG backup utility for Synology rsync daemon mode, with separate upgrade and nightly workflows plus a prompt-driven development handoff.
 
 ## Intent
 
